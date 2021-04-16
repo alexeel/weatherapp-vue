@@ -373,7 +373,6 @@ export default {
         this.updateNav(currentUrl);
       } catch (error) {
         this.visible = false;
-        this.weather.cityName = cityTitle;
         this.selectCity(cityIndex, false);
         this.updateNav("");
       }
