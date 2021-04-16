@@ -1,4 +1,4 @@
-# weatherapp-vue
+# WeatherApp on Vue.js
 
 ## Project setup
 ```
@@ -15,10 +15,4 @@ npm run serve
 npm run build
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Or check build in GitHub Pages: https://alexeel.github.io/weatherapp-vue/
