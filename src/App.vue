@@ -300,10 +300,61 @@ export default {
     setCenter(currentLat, currentLng) {
       this.centerMap = { lat: currentLat, lng: currentLng };
     },
+    rus_to_latin(str) {
+      const ru = new Map([
+        ["а", "a"],
+        ["б", "b"],
+        ["в", "v"],
+        ["г", "g"],
+        ["д", "d"],
+        ["е", "e"],
+        ["є", "e"],
+        ["ё", "e"],
+        ["ж", "j"],
+        ["з", "z"],
+        ["и", "i"],
+        ["ї", "yi"],
+        ["й", "i"],
+        ["к", "k"],
+        ["л", "l"],
+        ["м", "m"],
+        ["н", "n"],
+        ["о", "o"],
+        ["п", "p"],
+        ["р", "r"],
+        ["с", "s"],
+        ["т", "t"],
+        ["у", "u"],
+        ["ф", "f"],
+        ["х", "h"],
+        ["ц", "c"],
+        ["ч", "ch"],
+        ["ш", "sh"],
+        ["щ", "shch"],
+        ["ы", "y"],
+        ["э", "e"],
+        ["ю", "u"],
+        ["я", "ya"],
+      ]);
+
+      str = str.replace(/[ъь]+/g, "");
+
+      return Array.from(str).reduce(
+        (s, l) =>
+          s +
+          (ru.get(l) ||
+            (ru.get(l.toLowerCase()) === undefined && l) ||
+            ru.get(l.toLowerCase()).toUpperCase()),
+        ""
+      );
+    },
+    updateNav(query) {
+      this.$router.push({ path: `/${query}` });
+    },
     getWeather: async function (city, cityIndex) {
       const cityTitle = city.cityTitle;
       const key = "2f496ab65f5a480192f101539211304";
-      const yesterday = new Date(Date.now() - 126400000)
+      const yesterday = new Date(Date.now() - 196400000)
         .toLocaleDateString()
         .split(".")
         .reverse()
@@ -313,8 +364,8 @@ export default {
         .split(".")
         .reverse()
         .join("-");
-      const historyURL = `http://api.weatherapi.com/v1/history.json?q=${cityTitle}&key=${key}&lang=ru&dt=${yesterday}&end_dt=${lastday}`;
-      const currentURL = `http://api.weatherapi.com/v1/current.json?q=${cityTitle}&key=${key}&lang=ru`;
+      const historyURL = `https://api.weatherapi.com/v1/history.json?q=${cityTitle}&key=${key}&lang=ru&dt=${yesterday}&end_dt=${lastday}`;
+      const currentURL = `https://api.weatherapi.com/v1/current.json?q=${cityTitle}&key=${key}&lang=ru`;
       //fetch weather
       try {
         const responseHistory = await fetch(historyURL);
@@ -349,6 +400,8 @@ export default {
         const currentLat = Number(dataCurrent.location.lat);
         const currentLng = Number(dataCurrent.location.lon);
         this.setCenter(currentLat, currentLng);
+        const currentUrl = this.rus_to_latin(dataCurrent.location.name);
+        this.updateNav(currentUrl);
       } catch (error) {
         this.visible = false;
         this.weather.cityName = cityTitle;
@@ -358,6 +411,7 @@ export default {
             element.isCorrect = false;
           }
         });
+        this.updateNav('');
       }
     },
   },
