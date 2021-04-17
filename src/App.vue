@@ -26,15 +26,14 @@
           <div class="weather__title">
             <h1 v-if="visible">{{ weather.cityName }}</h1>
             <span v-else class="h2"
-              >Город "{{ weather.cityName }}" не найден. Попробуйте повторить
-              попытку</span
+              >"{{ weather.cityName }}" city not found. Try to repeat request.</span
             >
           </div>
           <div v-if="visible" class="weather__info">
             <div class="weather-today">
               <div class="weather-today__wrap">
                 <div class="weather-today__title">
-                  <span>Сегодня</span>
+                  <span>Now</span>
                 </div>
                 <div class="weather-today__info">
                   <span class="weather-today__degree"
@@ -171,7 +170,7 @@
             <div class="weather__subinfo">
               <div class="weather-day">
                 <div class="weather-day__title">
-                  <span>Вчера</span>
+                  <span>Yesterday</span>
                 </div>
                 <div class="weather-day__info">
                   <div class="weather-day__subinfo">
@@ -194,7 +193,7 @@
 
               <div class="weather-day">
                 <div class="weather-day__title">
-                  <span>Завтра</span>
+                  <span>Tomorrow</span>
                 </div>
                 <div class="weather-day__info">
                   <div class="weather-day__subinfo">
@@ -216,7 +215,7 @@
               </div>
               <div class="weather-day">
                 <div class="weather-day__title">
-                  <span>Послезавтра</span>
+                  <span>Overmorrow</span>
                 </div>
                 <div class="weather-day__info">
                   <div class="weather-day__subinfo">
@@ -258,38 +257,34 @@ export default {
       citySearch: "",
       cities: [
         {
-          cityTitle: "Москва",
-          cityInternationalTitle: "Moscow",
+          cityTitle: "Moscow",
           isActive: true,
           isCorrect: true,
         },
         {
-          cityTitle: "Нью-Йорк",
-          cityInternationalTitle: "New-York",
+          cityTitle: "New-York",
           isActive: false,
           isCorrect: true,
         },
         {
-          cityTitle: "Рио-де-Жанейро",
-          cityInternationalTitle: "Rio-De-Janeiro",
+          cityTitle: "Rio-De-Janeiro",
           isActive: false,
           isCorrect: true,
         },
         {
-          cityTitle: "Бирлен",
-          cityInternationalTitle: "Beerlen",
+          cityTitle: "Beerlen",
           isActive: false,
           isCorrect: true,
         },
       ],
       weather: {
-        cityName: "Москва",
+        cityName: "Moscow",
         temperature: [0, 0, 0, 0],
         description: [
-          "Не получено",
-          "Не получено",
-          "Не получено",
-          "Не получено",
+          "Not received",
+          "Not received",
+          "Not received",
+          "Not received",
         ],
         icon: [
           "//cdn.weatherapi.com/weather/64x64/day/113.png",
@@ -327,7 +322,7 @@ export default {
         this.weather.cityName = cityTitle;
         cityIndex = this.cities.length;
       } else {
-        cityTitle = city.cityInternationalTitle;
+        cityTitle = city.cityTitle;
         this.weather.cityName = city.cityTitle;
       }
       const key = "2f496ab65f5a480192f101539211304";
@@ -384,7 +379,7 @@ export default {
       let routingIndex = 0;
       let routingCity = routingTitle;
       this.cities.forEach((element, index) => {
-        if (element.cityInternationalTitle === routingTitle) {
+        if (element.cityTitle === routingTitle) {
           routingIndex = index;
           routingCity = element;
           return;
